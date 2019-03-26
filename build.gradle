@@ -108,12 +108,12 @@ configure(allprojects) { project ->
 		options.encoding = "UTF-8"
 	}
 
-	compileTestJava {
+	/*compileTestJava {
 		sourceCompatibility = 1.8  // can be switched to 11 for testing
 		targetCompatibility = 1.8
 		options.encoding = "UTF-8"
 		options.compilerArgs += "-parameters"
-	}
+	}*/
 
 	compileKotlin {
 		kotlinOptions {
@@ -122,25 +122,25 @@ configure(allprojects) { project ->
 		}
 	}
 
-	compileTestKotlin {
+	/*compileTestKotlin {
 		kotlinOptions {
 			jvmTarget = "1.8"
 			freeCompilerArgs = ["-Xjsr305=strict"]
 		}
-	}
+	}*/
 
-	test {
-		systemProperty("java.awt.headless", "true")
-		systemProperty("testGroups", project.properties.get("testGroups"))
-		systemProperty("io.netty.leakDetection.level", "paranoid")
-		scanForTestClasses = false
-		include(["**/*Tests.class", "**/*Test.class"])
-		// Since we set scanForTestClasses to false, we need to filter out inner
-		// classes with the "$" pattern; otherwise, using -Dtest.single=MyTests to
-		// run MyTests by itself will fail if MyTests contains any inner classes.
-		exclude(["**/Abstract*.class", '**/*$*'])
-		reports.junitXml.setDestination(file("$buildDir/test-results"))
-	}
+	//test {
+	//	systemProperty("java.awt.headless", "true")
+	//	systemProperty("testGroups", project.properties.get("testGroups"))
+	//	systemProperty("io.netty.leakDetection.level", "paranoid")
+	//	scanForTestClasses = false
+	//	include(["**/*Tests.class", "**/*Test.class"])
+	//	// Since we set scanForTestClasses to false, we need to filter out inner
+	//	// classes with the "$" pattern; otherwise, using -Dtest.single=MyTests to
+	//	// run MyTests by itself will fail if MyTests contains any inner classes.
+	//	exclude(["**/Abstract*.class", '**/*$*'])
+	//	reports.junitXml.setDestination(file("$buildDir/test-results"))
+	//}
 
 	checkstyle {
 		toolVersion = "8.18"
@@ -263,7 +263,7 @@ configure(rootProject) {
 	// Don't publish the default jar for the root project
 	configurations.archives.artifacts.clear()
 
-	dependencies {  // for integration tests
+	/*dependencies {  // for integration tests
 		testCompile(project(":spring-aop"))
 		testCompile(project(":spring-beans"))
 		testCompile(project(":spring-context"))
@@ -280,7 +280,7 @@ configure(rootProject) {
 		testCompile("org.aspectj:aspectjweaver:${aspectjVersion}")
 		testCompile("org.hsqldb:hsqldb:${hsqldbVersion}")
 		testCompile("org.hibernate:hibernate-core:5.1.17.Final")
-	}
+	}*/
 
 	artifacts {
 		archives docsZip
