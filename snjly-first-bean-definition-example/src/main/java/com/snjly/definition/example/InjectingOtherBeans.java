@@ -28,6 +28,9 @@ public class InjectingOtherBeans {
 	}
 
 	private static class MyBean {
+		public MyBean() {
+			System.out.println("MyBean construct...");
+		}
 		private MyOtherBean otherBean;
 
 		public void setOtherBean(MyOtherBean otherBean) {
@@ -40,7 +43,9 @@ public class InjectingOtherBeans {
 	}
 
 	private static class MyOtherBean {
-
+		public MyOtherBean() {
+			System.out.println("MyOtherBean construct...");
+		}
 		public void doSomething() {
 			System.out.println("from other bean ");
 		}

@@ -12,8 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class BeanFactoryPostProcessorExample {
 
 	public static void main(String[] args) {
-		AnnotationConfigApplicationContext context =
-				new AnnotationConfigApplicationContext(MyConfig.class);
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
 		MyBean bean = context.getBean(MyBean.class);
 		bean.doSomething();
 	}
@@ -28,22 +27,27 @@ public class BeanFactoryPostProcessorExample {
 
 	private static class MyConfigBean implements BeanFactoryPostProcessor {
 
+		public MyConfigBean() {
+			System.out.println("MyConfigBean construct...");
+		}
+
 		@Override
-		public void postProcessBeanFactory(
-				ConfigurableListableBeanFactory beanFactory)
-				throws BeansException {
+		public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
 
 			GenericBeanDefinition bd = new GenericBeanDefinition();
 			bd.setBeanClass(MyBean.class);
 			bd.getPropertyValues().add("strProp", "my string property");
 
-			((DefaultListableBeanFactory) beanFactory)
-					.registerBeanDefinition("myBeanName", bd);
+			((DefaultListableBeanFactory) beanFactory).registerBeanDefinition("myBeanName", bd);
 		}
 	}
 
 	private static class MyBean {
 		private String strProp;
+
+		public MyBean() {
+			System.out.println("MyBean construct...");
+		}
 
 		public void setStrProp(String strProp) {
 			this.strProp = strProp;

@@ -12,8 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class BeanDefinitionRegistryPostProcessorExample {
 
 	public static void main(String[] args) {
-		AnnotationConfigApplicationContext context =
-				new AnnotationConfigApplicationContext(MyConfig.class);
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
 
 		MyBean bean = (MyBean) context.getBean("myBeanName");
 		bean.doSomething();
@@ -27,13 +26,9 @@ public class BeanDefinitionRegistryPostProcessorExample {
 		}
 	}
 
-	private static class MyConfigBean
-			implements BeanDefinitionRegistryPostProcessor {
-
+	private static class MyConfigBean implements BeanDefinitionRegistryPostProcessor {
 		@Override
-		public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry)
-				throws BeansException {
-
+		public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
 			GenericBeanDefinition bd = new GenericBeanDefinition();
 			bd.setBeanClass(MyBean.class);
 			bd.getPropertyValues().add("strProp", "my string property");
@@ -49,6 +44,10 @@ public class BeanDefinitionRegistryPostProcessorExample {
 
 	private static class MyBean {
 		private String strProp;
+
+		public MyBean() {
+			System.out.println("MyBean construct...");
+		}
 
 		public void setStrProp(String strProp) {
 			this.strProp = strProp;

@@ -19,6 +19,10 @@ public class BeanDefinitionBuilderExample {
 	private static class MyBean {
 		private String str;
 
+		public MyBean() {
+			System.out.println("MyBean construct...");
+		}
+
 		public void setStr(String str) {
 			this.str = str;
 		}

@@ -9,8 +9,7 @@ import java.util.Date;
 public class GenericBeanDefinitionExample {
 
 	public static void main(String[] args) {
-		DefaultListableBeanFactory context =
-				new DefaultListableBeanFactory();
+		DefaultListableBeanFactory context = new DefaultListableBeanFactory();
 
 		GenericBeanDefinition gbd = new GenericBeanDefinition();
 		gbd.setBeanClass(MyBean.class);
@@ -30,6 +29,10 @@ public class GenericBeanDefinitionExample {
 
 	private static class MyBean {
 		private Date date;
+
+		public MyBean() {
+			System.out.println("MyBean construct...");
+		}
 
 		public void doSomething() {
 			System.out.println("from my bean, date: " + date);
