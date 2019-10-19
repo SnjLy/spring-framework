@@ -136,24 +136,27 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	 */
 	public static final String INFER_METHOD = "(inferred)";
 
-
+	//bean对应的class
 	@Nullable
 	private volatile Object beanClass;
-
+	//bean的作用范围对应bean的scope， 默认是""
 	@Nullable
 	private String scope = SCOPE_DEFAULT;
-
+	//是否是抽象，对应bean属性的abstract
 	private boolean abstractFlag = false;
-
+	//是否延迟加载，对应bean属性lazy-init
 	private boolean lazyInit = false;
-
+	//自动注入模式，对应bean属性的autowire  参考AutowireCapableBeanFactory ， 依赖注入的类型
 	private int autowireMode = AUTOWIRE_NO;
-
+	//以来检查，spring3.0后启用这个属性
 	private int dependencyCheck = DEPENDENCY_CHECK_NONE;
 
+	//用来表示一个bean的实例化依靠另外一个bean先实例化，对应bean属性depend-on
 	@Nullable
 	private String[] dependsOn;
 
+	//autowire-candidate属性设置为false，这样容器在查找自动装配对象时候，将不考虑该bean，
+	// 也就是他不会被考虑作为其他bean自动装配的候选者，但是该bean本身还是可以使自动装配来注入其他bean的
 	private boolean autowireCandidate = true;
 
 	private boolean primary = false;
@@ -163,42 +166,56 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	@Nullable
 	private Supplier<?> instanceSupplier;
 
+	//允许访问非公开的构造器和方法，程序可以设置
 	private boolean nonPublicAccessAllowed = true;
 
+	//是否以一种宽松的模式解析构造函数，默认为true
 	private boolean lenientConstructorResolution = true;
 
 	@Nullable
 	private String factoryBeanName;
 
+	//对应bean属性factory-method
 	@Nullable
 	private String factoryMethodName;
 
+	//记录构造函数注入属性  ，对应bean属性construct-arg
 	@Nullable
 	private ConstructorArgumentValues constructorArgumentValues;
 
+	//普通属性集合
 	@Nullable
 	private MutablePropertyValues propertyValues;
 
+	//方法重写的持有者，记录lookup-method，replace-method元素
 	@Nullable
 	private MethodOverrides methodOverrides;
 
+	//初始化方法，对应bean属性init-method
 	@Nullable
 	private String initMethodName;
 
+	//销毁方法。对应bean属性destroy-method
 	@Nullable
 	private String destroyMethodName;
 
+	//是否执行init-method
 	private boolean enforceInitMethod = true;
 
+	//是否执行destroy-method，程序设置
 	private boolean enforceDestroyMethod = true;
 
+	//是否是用户定义的而不是应用程序本身定义，程序设置
 	private boolean synthetic = false;
 
+	//定义这个bean的应用，APPLICATION：用户，INFARSTRUCTURE；
 	private int role = BeanDefinition.ROLE_APPLICATION;
 
+	//这个bean定义描述
 	@Nullable
 	private String description;
 
+	//这个bean定义的资源
 	@Nullable
 	private Resource resource;
 
@@ -449,6 +466,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	 * @see #SCOPE_SINGLETON
 	 * @see #SCOPE_PROTOTYPE
 	 */
+	//默认值为单例状态，尽管仅应用一次, Bean定义在包含工厂中变为活动状态。 bean定义最终可能会从父bean定义继承其范围。 由于这个原因，默认作用域名称是一个空字符串（即{@code“”}），在设置了可解析的作用域之前，将一直采用单例状态。
 	@Override
 	public void setScope(@Nullable String scope) {
 		this.scope = scope;
@@ -945,6 +963,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	}
 
 	/**
+	 * 设置此bean定义是否是“合成的”，即不是由应用程序本身定义的（例如，基础结构bean，例如用于自动代理的helper）
 	 * Set whether this bean definition is 'synthetic', that is, not defined
 	 * by the application itself (for example, an infrastructure bean such
 	 * as a helper for auto-proxying, created through {@code <aop:config>}).
